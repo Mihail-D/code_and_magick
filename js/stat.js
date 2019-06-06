@@ -31,29 +31,19 @@ window.renderStatistics = function(ctx, players, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, "rgba(0, 0, 0, 0.3)");
   renderCloud(ctx, CLOUD_X, CLOUD_Y, "#fff");
 
-
-  ctx.font = "bold 16px PT Mono";
-  ctx.fillStyle = "#000";
-  ctx.fillText("Ура вы победили!", 140, 15);
-  ctx.fillText("Список результатов:", 140, 35);
-
-  var players = ["Кекс", "Вы", "Катя", "Игорь"];
-  var times = [30000, 28000, 17000, 45000];
   var maxTime = getMaxElement(times);
-
+  ctx.font = "16px PT Mono";
 
   for (var i = 0; i < players.length; i++) {
+    players[i] === "Вы" ? (ctx.fillStyle = "rgba(255, 0, 0, 1)") : (ctx.fillStyle = "rgba(83, 51, 237, 1)");
 
     ctx.fillText(players[i], CLOUD_X + GAP, CLOUD_Y + GAP + FONT_GAP + (GAP + BAR_HEIGHT) * i);
+
     ctx.fillRect(
       CLOUD_X + GAP + TEXT_WIDTH,
       CLOUD_Y + GAP + (GAP + BAR_HEIGHT) * i,
       (barWidth * times[i]) / maxTime,
       BAR_HEIGHT
     );
-
-
-    players[i] == "Кекс" ? (ctx.fillStyle = "rgba(255, 0, 0, 1)") : (ctx.fillStyle = "#000");
-
   }
 };
