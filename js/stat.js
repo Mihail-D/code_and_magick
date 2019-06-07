@@ -5,45 +5,63 @@ var CLOUD_HEIGHT = 270;
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
 var GAP = 10;
-var FONT_GAP = 15;
-var TEXT_WIDTH = 50;
-var BAR_HEIGHT = 20;
-var barWidth = CLOUD_WIDTH - GAP - TEXT_WIDTH - GAP;
+var FONT_SIZE = 16;
+var TEXT_BEGIN = 45;
+var BAR_WIDTH = 40;
+var HISTOGRAM_HEIGHT = 150;
+var HISTOGRAM_GAP = 50;
 
-var renderCloud = function(ctx, x, y, color) {
+function createRect(ctx, x, y, width, height, color) {
   ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
-};
+  ctx.fillRect(x, y, width, height);
+}
 
-var getMaxElement = function(arr) {
-  var maxElement = arr[0];
+function createText(ctx, text, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillText(text, x, y);
+}
 
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
+function findMax(array) {
+  var len = array.length;
+  var max = array[0];
+  var maxValue = 0;
+  for (var i = 1; i < len; i++) {
+    if (array[i] > max) {
+      max = array[i];
+      maxValue = i;
     }
   }
 
-  return maxElement;
-};
+  return maxValue;
+}
 
-window.renderStatistics = function(ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, "rgba(0, 0, 0, 0.3)");
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, "#fff");
+function myOwnColor(ctx, name) {
+  if (name === "Вы") {
+    return "rgba(255, 0, 0, 1)";
+  }
 
-  var maxTime = getMaxElement(times);
-  ctx.font = "16px PT Mono";
+  return "hsl(240," + Math.floor(100 * Math.random()) + "%,50%)";
+}
 
-  for (var i = 0; i < players.length; i++) {
-    players[i] === "Вы" ? (ctx.fillStyle = "rgba(255, 0, 0, 1)") : (ctx.fillStyle = "rgba(83, 51, 237, 1)");
+window.renderStatistics = function(ctx, names, times) {
+  var maxTimeValue = findMax(times);
+  var histogramIndent = (CLOUD_WIDTH - names.length * BAR_WIDTH - (names.length - 1) * HISTOGRAM_GAP) / 2;
+  var barHeight;
+  var barX = CLOUD_X + histogramIndent;
+  var barBottom = CLOUD_HEIGHT + CLOUD_Y - GAP - FONT_SIZE;
 
-    ctx.fillText(players[i], CLOUD_X + GAP, CLOUD_Y + GAP + FONT_GAP + (GAP + BAR_HEIGHT) * i);
+  ctx.font = FONT_SIZE + "px PT Mono";
+  ctx.textBaseLine = "hanging";
+  createRect(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, CLOUD_WIDTH, CLOUD_HEIGHT, "rgba(0, 0, 0, 0.7)");
+  createRect(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, "#fff");
+  createText(ctx, "Ура вы победили!", CLOUD_X + GAP, TEXT_BEGIN, "#000");
+  createText(ctx, "Список результатов:", CLOUD_X + GAP, TEXT_BEGIN + FONT_SIZE + GAP, "#000");
 
-    ctx.fillRect(
-      CLOUD_X + GAP + TEXT_WIDTH,
-      CLOUD_Y + GAP + (GAP + BAR_HEIGHT) * i,
-      (barWidth * times[i]) / maxTime,
-      BAR_HEIGHT
-    );
+  for (var i = 0; i < times.length; i++) {
+    barHeight = Math.floor((times[i] * HISTOGRAM_HEIGHT) / times[maxTimeValue]);
+    createRect(ctx, barX, barBottom - barHeight, BAR_WIDTH, barHeight, myOwnColor(ctx, names[i]));
+    createText(ctx, names[i], barX, barBottom + FONT_SIZE, "#000");
+    createText(ctx, Math.floor(times[i]), barX, barBottom - barHeight - GAP, "#000");
+    barX += BAR_WIDTH + HISTOGRAM_GAP;
   }
 };
