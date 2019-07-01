@@ -6,7 +6,7 @@ discloseSetup.classList.toggle('hidden');
 var discloseSetupSimilar = document.querySelector('.setup-similar');
 discloseSetupSimilar.classList.toggle('hidden');
 
-var SIMILAR_CHARACTERS = [];
+var similarCharacters = [];
 var WIZARD_NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COATS_COLOR = [
@@ -34,17 +34,15 @@ var getFullNameConstructor = function () {
 };
 
 // конструктор объекта
-var getNewObject = function () {
-  var characterObject = {};
-  characterObject.name = getFullNameConstructor();
-  characterObject.coatColor = COATS_COLOR[getRandomNumber(0, COATS_COLOR.length - 1)];
-  characterObject.eyeColor = EYES_COLOR[getRandomNumber(0, EYES_COLOR.length - 1)];
-  return characterObject;
-};
 
-// добавление четырех объектов
+var characterObject = {};
+characterObject.name = getFullNameConstructor();
+characterObject.coatColor = COATS_COLOR[getRandomNumber(0, COATS_COLOR.length - 1)];
+characterObject.eyeColor = EYES_COLOR[getRandomNumber(0, EYES_COLOR.length - 1)];
+
+// добавление четырех объектов в массив
 for (var i = 4; i > 0; i--) {
-  SIMILAR_CHARACTERS.push(getNewObject());
+  similarCharacters.push(characterObject);
 }
 
 // заполняем шаблон
@@ -53,10 +51,18 @@ var similarWizardTemplate = document
   .querySelector('#similar-wizard-template')
   .content.querySelector('.setup-similar-item');
 
-for (var j = 0; j < 4; j++) {
+var createWizard = function () {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = getFullNameConstructor();
   wizardElement.querySelector('.wizard-coat').style.fill = COATS_COLOR[getRandomNumber(0, 4)];
   wizardElement.querySelector('.wizard-eyes').style.fill = EYES_COLOR[getRandomNumber(0, 4)];
-  similarListElement.appendChild(wizardElement);
+  return wizardElement;
+};
+
+var wizardFragment = document.createDocumentFragment();
+
+for (var j = 0; j < 4; j++) {
+  wizardFragment.appendChild(createWizard());
 }
+
+similarListElement.appendChild(wizardFragment);
