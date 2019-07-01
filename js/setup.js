@@ -7,8 +7,8 @@ var discloseSetupSimilar = document.querySelector('.setup-similar');
 discloseSetupSimilar.classList.toggle('hidden');
 
 var SIMILAR_CHARACTERS = [];
-var NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var WIZARD_NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COATS_COLOR = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
@@ -26,7 +26,11 @@ var getRandomNumber = function (minValue, maxValue) {
 
 // конструктор полного имени
 var getFullNameConstructor = function () {
-  return NAMES[getRandomNumber(0, NAMES.length - 1)] + ' ' + SURNAMES[getRandomNumber(0, SURNAMES.length - 1)];
+  return (
+    WIZARD_NAMES[getRandomNumber(0, WIZARD_NAMES.length - 1)] +
+    ' ' +
+    WIZARD_SURNAMES[getRandomNumber(0, WIZARD_SURNAMES.length - 1)]
+  );
 };
 
 // конструктор объекта
@@ -44,17 +48,15 @@ for (var i = 4; i > 0; i--) {
 }
 
 // заполняем шаблон
-var characterTemplate = document.querySelector('#similar-wizard-characterTemplate');
+var similarListElement = document.querySelector('.setup-similar-list');
+var similarWizardTemplate = document
+  .querySelector('#similar-wizard-template')
+  .content.querySelector('.setup-similar-item');
 
-for (var i = 0; i < SIMILAR_CHARACTERS.length; i++) {
-  var wizard = SIMILAR_CHARACTERS[i];
-  var clone = characterTemplate.content.cloneNode(true);
-
-  var name = clone.querySelector('setup-similar-label');
-
-  var coatColor = clone.querySelector('wizard-coat');
-
-  
-
-  characterTemplate.parentNode.appendChild(clone);
+for (var j = 0; j < 4; j++) {
+  var wizardElement = similarWizardTemplate.cloneNode(true);
+  wizardElement.querySelector('.setup-similar-label').textContent = getFullNameConstructor();
+  wizardElement.querySelector('.wizard-coat').style.fill = COATS_COLOR[getRandomNumber(0, 4)];
+  wizardElement.querySelector('.wizard-eyes').style.fill = EYES_COLOR[getRandomNumber(0, 4)];
+  similarListElement.appendChild(wizardElement);
 }
