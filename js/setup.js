@@ -11,20 +11,20 @@ var menuToggleView = function () {
   discloseSetupSimilar.classList.toggle('hidden');
 };
 
-// // userNameField.addEventListener('focus', function () {
+// userNameField.addEventListener('focus', function () {
 
-// // });
-
-// document.addEventListener('keydown', function (evt) {
-//   if (evt.keyCode === 27) {
-//     if (userNameField.hasFocus()) {
-//       return;
-//     } else {
-//       discloseSetup.classList.add('hidden');
-//       discloseSetupSimilar.classList.add('hidden');
-//     }
-//   }
 // });
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    if (userNameField.hasFocus()) {
+      return;
+    } else {
+      discloseSetup.classList.add('hidden');
+      discloseSetupSimilar.classList.add('hidden');
+    }
+  }
+});
 
 var form = document.querySelector('.setup-wizard-form');
 submitButton.addEventListener('click', function () {
