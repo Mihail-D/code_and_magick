@@ -23,10 +23,6 @@ var COATS_COLOR = [
 var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 var FIREBALLS_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
-// userNameField.addEventListener('focus', function () {
-
-// });
-
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 27 && userNameField !== document.activeElement) {
     discloseSetup.classList.add('hidden');
