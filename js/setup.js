@@ -6,10 +6,7 @@ var discloseSetup = document.querySelector('.setup');
 var discloseSetupSimilar = document.querySelector('.setup-similar');
 var userNameField = document.querySelector('.setup-user-name');
 var formMain = document.querySelector('.setup');
-var menuToggleView = function () {
-  discloseSetup.classList.toggle('hidden');
-  discloseSetupSimilar.classList.toggle('hidden');
-};
+
 var similarCharacters = [];
 var WIZARD_NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
@@ -27,6 +24,13 @@ var FIREBALLS_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var setupWindowCoords = {
   x: formMain.style.left,
   y: formMain.style.top,
+};
+
+var menuToggleView = function () {
+  formMain.style.top = setupWindowCoords.y;
+  formMain.style.left = setupWindowCoords.x;
+  discloseSetup.classList.toggle('hidden');
+  discloseSetupSimilar.classList.toggle('hidden');
 };
 
 document.addEventListener('keydown', function (evt) {
