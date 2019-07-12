@@ -25,14 +25,14 @@ var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 var FIREBALLS_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var setupWindowCoords = {
-  x: formMain.currentStyle.left,
-  y: formMain.currentStyle.top,
+  x: formMain.style.left,
+  y: formMain.style.top,
 };
 
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 27 && userNameField !== document.activeElement) {
-    formMain.style.top = setupWindowCoords.y + 'px';
-    formMain.style.left = setupWindowCoords.x + 'px';
+    formMain.style.top = setupWindowCoords.y;
+    formMain.style.left = setupWindowCoords.x;
     discloseSetup.classList.add('hidden');
     discloseSetupSimilar.classList.add('hidden');
   }
