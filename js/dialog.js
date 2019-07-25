@@ -1,18 +1,18 @@
 'use strict';
 
-var openSetupMenuButton = document.querySelector('.setup-open');
-var closeSetupMenuButton = document.querySelector('.setup-close');
-var discloseSetup = document.querySelector('.setup');
-var discloseSetupSimilar = document.querySelector('.setup-similar');
-var userNameField = document.querySelector('.setup-user-name');
-var formMain = document.querySelector('.setup');
-
-var setupWindowCoords = {
-  x: formMain.style.left,
-  y: formMain.style.top,
-};
-
 (function () {
+  var openSetupMenuButton = document.querySelector('.setup-open');
+  var closeSetupMenuButton = document.querySelector('.setup-close');
+  var discloseSetup = document.querySelector('.setup');
+  var discloseSetupSimilar = document.querySelector('.setup-similar');
+  var userNameField = document.querySelector('.setup-user-name');
+  var formMain = document.querySelector('.setup');
+
+  var setupWindowCoords = {
+    x: formMain.style.left,
+    y: formMain.style.top,
+  };
+
   var menuToggleView = function () {
     formMain.style.top = setupWindowCoords.y;
     formMain.style.left = setupWindowCoords.x;
@@ -42,9 +42,7 @@ var setupWindowCoords = {
   closeSetupMenuButton.addEventListener('click', function () {
     menuToggleView();
   });
-})();
 
-(function () {
   var dialogHandler = formMain.querySelector('.upload');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
